@@ -46,6 +46,8 @@ class SsoCallbackController extends Controller
                 'employee_id' => $isEmployee ? $verified->scopeId : null,
                 'accessible_apps' => $verified->accessibleApps,
                 'identity_synced_at' => now(),
+                'last_login_at' => now(),
+                'last_login_ip' => $request->ip(),
             ],
         );
 
