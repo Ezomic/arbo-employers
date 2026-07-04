@@ -65,6 +65,7 @@ class CaseOfficersClient extends InternalApiClient
         $this->put("cases/{$case->id}", [
             'tenant_id' => $case->tenant_id,
             'employee_id' => $case->employee_id,
+            'case_type' => $case->case_type,
             'status' => $case->status,
             'opened_at' => $case->opened_at->toDateString(),
             'expected_return_date' => $case->expected_return_date?->toDateString(),

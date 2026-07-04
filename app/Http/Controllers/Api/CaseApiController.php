@@ -14,6 +14,7 @@ class CaseApiController extends Controller
         $data = $request->validate([
             'tenant_id' => ['required', 'uuid'],
             'employee_id' => ['required', 'uuid'],
+            'case_type' => ['nullable', 'string'],
             'status' => ['required', 'string'],
             'opened_at' => ['required', 'date'],
             'expected_return_date' => ['nullable', 'date'],
