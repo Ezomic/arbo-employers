@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\AbsenceController::store
-* @see app/Http/Controllers/AbsenceController.php:17
+* @see app/Http/Controllers/AbsenceController.php:18
 * @route '/employer/absences'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\AbsenceController::store
-* @see app/Http/Controllers/AbsenceController.php:17
+* @see app/Http/Controllers/AbsenceController.php:18
 * @route '/employer/absences'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\AbsenceController::store
-* @see app/Http/Controllers/AbsenceController.php:17
+* @see app/Http/Controllers/AbsenceController.php:18
 * @route '/employer/absences'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\AbsenceController::store
-* @see app/Http/Controllers/AbsenceController.php:17
+* @see app/Http/Controllers/AbsenceController.php:18
 * @route '/employer/absences'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\AbsenceController::store
-* @see app/Http/Controllers/AbsenceController.php:17
+* @see app/Http/Controllers/AbsenceController.php:18
 * @route '/employer/absences'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -57,7 +57,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\AbsenceController::mutate
-* @see app/Http/Controllers/AbsenceController.php:47
+* @see app/Http/Controllers/AbsenceController.php:53
 * @route '/employer/absences/{case}/mutate'
 */
 export const mutate = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -72,7 +72,7 @@ mutate.definition = {
 
 /**
 * @see \App\Http\Controllers\AbsenceController::mutate
-* @see app/Http/Controllers/AbsenceController.php:47
+* @see app/Http/Controllers/AbsenceController.php:53
 * @route '/employer/absences/{case}/mutate'
 */
 mutate.url = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -99,7 +99,7 @@ mutate.url = (args: { case: string | number } | [caseParam: string | number ] | 
 
 /**
 * @see \App\Http\Controllers\AbsenceController::mutate
-* @see app/Http/Controllers/AbsenceController.php:47
+* @see app/Http/Controllers/AbsenceController.php:53
 * @route '/employer/absences/{case}/mutate'
 */
 mutate.post = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -109,7 +109,7 @@ mutate.post = (args: { case: string | number } | [caseParam: string | number ] |
 
 /**
 * @see \App\Http\Controllers\AbsenceController::mutate
-* @see app/Http/Controllers/AbsenceController.php:47
+* @see app/Http/Controllers/AbsenceController.php:53
 * @route '/employer/absences/{case}/mutate'
 */
 const mutateForm = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -119,7 +119,7 @@ const mutateForm = (args: { case: string | number } | [caseParam: string | numbe
 
 /**
 * @see \App\Http\Controllers\AbsenceController::mutate
-* @see app/Http/Controllers/AbsenceController.php:47
+* @see app/Http/Controllers/AbsenceController.php:53
 * @route '/employer/absences/{case}/mutate'
 */
 mutateForm.post = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -131,7 +131,7 @@ mutate.form = mutateForm
 
 /**
 * @see \App\Http\Controllers\AbsenceController::close
-* @see app/Http/Controllers/AbsenceController.php:69
+* @see app/Http/Controllers/AbsenceController.php:80
 * @route '/employer/absences/{case}/close'
 */
 export const close = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -146,7 +146,7 @@ close.definition = {
 
 /**
 * @see \App\Http\Controllers\AbsenceController::close
-* @see app/Http/Controllers/AbsenceController.php:69
+* @see app/Http/Controllers/AbsenceController.php:80
 * @route '/employer/absences/{case}/close'
 */
 close.url = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -173,7 +173,7 @@ close.url = (args: { case: string | number } | [caseParam: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\AbsenceController::close
-* @see app/Http/Controllers/AbsenceController.php:69
+* @see app/Http/Controllers/AbsenceController.php:80
 * @route '/employer/absences/{case}/close'
 */
 close.post = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -183,7 +183,7 @@ close.post = (args: { case: string | number } | [caseParam: string | number ] | 
 
 /**
 * @see \App\Http\Controllers\AbsenceController::close
-* @see app/Http/Controllers/AbsenceController.php:69
+* @see app/Http/Controllers/AbsenceController.php:80
 * @route '/employer/absences/{case}/close'
 */
 const closeForm = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -193,7 +193,7 @@ const closeForm = (args: { case: string | number } | [caseParam: string | number
 
 /**
 * @see \App\Http\Controllers\AbsenceController::close
-* @see app/Http/Controllers/AbsenceController.php:69
+* @see app/Http/Controllers/AbsenceController.php:80
 * @route '/employer/absences/{case}/close'
 */
 closeForm.post = (args: { case: string | number } | [caseParam: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
