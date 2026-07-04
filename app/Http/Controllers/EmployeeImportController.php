@@ -8,6 +8,7 @@ use App\Services\EmployerSyncService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class EmployeeImportController extends Controller
 {
@@ -24,6 +25,11 @@ class EmployeeImportController extends Controller
         $user = $request->user();
 
         $import = $client->importEmployees($user->tenant_id, $user->employer_id, $user->id, $request->file('file'));
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Roster uploaded — the import is being processed.',
+        ]);
 
         return to_route('employer.show')->with('importId', $import['id']);
     }

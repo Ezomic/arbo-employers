@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Employer;
 use App\Models\User;
 use App\Services\IdentityClient;
 use Illuminate\Http\RedirectResponse;
@@ -23,7 +24,7 @@ class UserController extends Controller
 
         return Inertia::render('users/Index', [
             'users' => $users,
-            'employers' => \App\Models\Employer::query()->where('tenant_id', $user->tenant_id)->oldest('name')->get(['id', 'name']),
+            'employers' => Employer::query()->where('tenant_id', $user->tenant_id)->oldest('name')->get(['id', 'name']),
         ]);
     }
 
@@ -40,6 +41,11 @@ class UserController extends Controller
 
         $created = $identity->createUser($user->tenant_id, $data['name'], $data['email'], 'employer', $data['scope_id'] ?? null);
 
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => "User {$data['name']} created.",
+        ]);
+
         return to_route('users.index')->with('temporaryPassword', $created['temporary_password'] ?? null);
     }
 
@@ -53,12 +59,16 @@ class UserController extends Controller
 
         $identity->updateUser($uuid, $data);
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'User updated.']);
+
         return to_route('users.index');
     }
 
     public function destroy(string $uuid, IdentityClient $identity): RedirectResponse
     {
         $identity->deleteUser($uuid);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'User deleted.']);
 
         return to_route('users.index');
     }

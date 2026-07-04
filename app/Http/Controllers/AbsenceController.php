@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
+use Inertia\Inertia;
 
 class AbsenceController extends Controller
 {
@@ -40,6 +41,11 @@ class AbsenceController extends Controller
 
         $this->syncToCaseOfficers($client, $case, 'store');
 
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Absence reported — your case officer has been notified.',
+        ]);
+
         return to_route('employer.show');
     }
 
@@ -60,6 +66,11 @@ class AbsenceController extends Controller
         $caseFile->update(['expected_return_date' => $data['expected_return_date'] ?? null]);
 
         $this->syncToCaseOfficers($client, $caseFile->fresh(), 'mutate');
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Mutation saved.',
+        ]);
 
         return to_route('employer.show');
     }
@@ -84,6 +95,11 @@ class AbsenceController extends Controller
         ]);
 
         $this->syncToCaseOfficers($client, $caseFile->fresh(), 'close');
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => 'Recovery registered — the case has been closed.',
+        ]);
 
         return to_route('employer.show');
     }
