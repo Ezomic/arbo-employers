@@ -3,9 +3,10 @@
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\Auth\SsoCallbackController;
 use App\Http\Controllers\EmployeeController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmployeeImportController;
 use App\Http\Controllers\EmployerController;
+use App\Http\Controllers\SelfServiceController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use RobbinThijssen\IdentitySsoKit\Http\Controllers\LogoutController;
 use RobbinThijssen\IdentitySsoKit\Http\Controllers\RedirectToIdentityController;
@@ -17,6 +18,9 @@ Route::post('logout', LogoutController::class)->middleware('auth')->name('logout
 Route::middleware(['auth'])->group(function () {
     Route::redirect('/', '/employer')->name('home');
     Route::redirect('dashboard', '/employer')->name('dashboard');
+
+    Route::get('self-service', [SelfServiceController::class, 'show'])->name('self-service.show');
+    Route::get('self-service/gdpr-export', [SelfServiceController::class, 'gdprExport'])->name('self-service.gdpr-export');
 
     Route::get('employer', [EmployerController::class, 'show'])->name('employer.show');
     Route::get('employer/employees/search', [EmployeeController::class, 'search'])->name('employees.search');
