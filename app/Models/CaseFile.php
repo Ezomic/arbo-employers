@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-#[Fillable(['id', 'tenant_id', 'employee_id', 'status', 'opened_at', 'expected_return_date', 'closed_at'])]
+#[Fillable(['id', 'tenant_id', 'employee_id', 'case_type', 'status', 'opened_at', 'expected_return_date', 'closed_at'])]
 class CaseFile extends Model
 {
     public $incrementing = false;

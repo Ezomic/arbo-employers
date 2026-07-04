@@ -42,12 +42,15 @@ type OpenCase = {
     employee: { id: string; first_name: string; last_name: string };
 };
 
+type CaseTypeOption = { value: string; label: string };
+
 const props = defineProps<{
     employer: Employer;
     contracts: Contract[];
     organizationalUnits: OrganizationalUnit[];
     employees: Employee[];
     openCases: OpenCase[];
+    caseTypes: CaseTypeOption[];
 }>();
 
 const unitDepths = computed(() => {
@@ -201,6 +204,21 @@ onMounted(() => {
                             </option>
                         </select>
                         <InputError :message="errors.employee_id" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="absence_case_type">Type dossier</Label>
+                        <select
+                            id="absence_case_type"
+                            name="case_type"
+                            required
+                            class="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs"
+                        >
+                            <option value="" disabled selected>Select a type</option>
+                            <option v-for="type in caseTypes" :key="type.value" :value="type.value">
+                                {{ type.label }}
+                            </option>
+                        </select>
+                        <InputError :message="errors.case_type" />
                     </div>
                     <div class="grid gap-2">
                         <Label for="start_date">Start date</Label>
