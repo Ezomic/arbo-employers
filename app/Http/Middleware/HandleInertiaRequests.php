@@ -63,6 +63,9 @@ class HandleInertiaRequests extends Middleware
                         'expected_return_date' => $case->expected_return_date?->toDateString(),
                     ]);
             },
+            'flash' => [
+                'temporaryPassword' => fn () => $request->session()->get('temporaryPassword'),
+            ],
         ];
     }
 }
