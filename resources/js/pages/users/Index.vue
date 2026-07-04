@@ -104,7 +104,7 @@ async function copyPassword(password: string) {
             </div>
         </div>
 
-        <div class="rounded-lg border">
+        <div class="overflow-x-auto rounded-lg border">
             <table class="w-full text-sm">
                 <thead>
                     <tr class="border-b bg-muted/50">

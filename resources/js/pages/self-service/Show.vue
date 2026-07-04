@@ -56,7 +56,7 @@ function formatDate(dateStr: string | null): string {
             </Button>
         </div>
 
-        <div class="rounded-lg border">
+        <div class="overflow-x-auto rounded-lg border">
             <div class="border-b px-4 py-3">
                 <h2 class="font-medium">Verzuimhistorie</h2>
             </div>
