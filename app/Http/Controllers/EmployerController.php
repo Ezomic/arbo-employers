@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\CaseType;
 use App\Models\User;
 use App\Services\CaseOfficersClient;
 use App\Services\EmployerSyncService;
@@ -26,6 +27,11 @@ class EmployerController extends Controller
 
         $openCases = $client->getOpenCases($user->tenant_id, $user->employer_id);
 
+        $caseTypes = array_values(array_map(
+            fn (CaseType $t) => ['value' => $t->value, 'label' => $t->label()],
+            array_filter(CaseType::cases(), fn (CaseType $t) => $t->employerVisible()),
+        ));
+
         return Inertia::render('employer/Show', [
             'employer' => $employer,
             'contracts' => $employer->contracts()->latest()->get(),
@@ -33,6 +39,7 @@ class EmployerController extends Controller
             'employees' => $employer->employees()->with('organizationalUnit')->latest()->get(),
             'contactPersons' => $employer->contactPersons()->oldest()->get(),
             'openCases' => array_values($openCases),
+            'caseTypes' => $caseTypes,
         ]);
     }
 }
