@@ -22,31 +22,50 @@ class CaseOfficersClient extends InternalApiClient
         return config('services.case_officers.token');
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getEmployer(string $tenantId, string $employerId): array
     {
         return $this->get("employers/{$employerId}", ['tenant_id' => $tenantId]);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getContracts(string $tenantId, string $employerId): array
     {
         return $this->get("employers/{$employerId}/contracts", ['tenant_id' => $tenantId]);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getEmployees(string $tenantId, string $employerId): array
     {
         return $this->get("employers/{$employerId}/employees", ['tenant_id' => $tenantId]);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getOrganizationalUnits(string $tenantId, string $employerId): array
     {
         return $this->get("employers/{$employerId}/organizational-units", ['tenant_id' => $tenantId]);
     }
 
+    /**
+     * @return array<int, array<string, mixed>>
+     */
     public function getContactPersons(string $tenantId, string $employerId): array
     {
         return $this->get("employers/{$employerId}/contact-persons", ['tenant_id' => $tenantId]);
     }
 
+    /**
+     * @param  array<string, mixed>  $employee
+     * @return array<string, mixed>
+     */
     public function createEmployee(string $tenantId, string $employerId, array $employee): array
     {
         return $this->post("employers/{$employerId}/employees", [
@@ -55,6 +74,9 @@ class CaseOfficersClient extends InternalApiClient
         ]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function importEmployees(string $tenantId, string $employerId, string $userId, UploadedFile $file): array
     {
         return $this->postFile("employers/{$employerId}/employees/import", $file, [
@@ -64,6 +86,9 @@ class CaseOfficersClient extends InternalApiClient
         ]);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function getImportStatus(string $tenantId, int $importId): array
     {
         return $this->get("employee-imports/{$importId}", ['tenant_id' => $tenantId]);
@@ -73,6 +98,8 @@ class CaseOfficersClient extends InternalApiClient
      * Registers the start of an absence course for one of this employer's
      * own employees — this is what actually creates the case on Case
      * Officers' side.
+     *
+     * @return array<string, mixed>
      */
     public function createCase(string $tenantId, string $employeeId, string $startDate): array
     {
