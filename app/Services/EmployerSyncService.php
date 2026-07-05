@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\ContactPerson;
 use App\Models\Contract;
 use App\Models\Employee;
 use App\Models\Employer;
@@ -23,7 +24,14 @@ class EmployerSyncService
 
         $employer = Employer::query()->updateOrCreate(
             ['id' => $employerData['id']],
-            ['tenant_id' => $employerData['tenant_id'], 'name' => $employerData['name']],
+            [
+                'tenant_id' => $employerData['tenant_id'],
+                'name' => $employerData['name'],
+                'address_line_1' => $employerData['address_line_1'] ?? null,
+                'address_line_2' => $employerData['address_line_2'] ?? null,
+                'postal_code' => $employerData['postal_code'] ?? null,
+                'city' => $employerData['city'] ?? null,
+            ],
         );
 
         foreach ($this->client->getContracts($tenantId, $employerId) as $contract) {
@@ -65,6 +73,26 @@ class EmployerSyncService
                     'email' => $employee['email'],
                     'employee_number' => $employee['employee_number'],
                     'status' => $employee['status'],
+                ],
+            );
+        }
+
+        $incoming = $this->client->getContactPersons($tenantId, $employerId);
+        $incomingIds = array_column($incoming, 'id');
+
+        ContactPerson::query()->where('employer_id', $employer->id)
+            ->whereNotIn('id', $incomingIds)
+            ->delete();
+
+        foreach ($incoming as $person) {
+            ContactPerson::query()->updateOrCreate(
+                ['id' => $person['id']],
+                [
+                    'employer_id' => $employer->id,
+                    'name' => $person['name'],
+                    'email' => $person['email'] ?? null,
+                    'phone' => $person['phone'] ?? null,
+                    'job_title' => $person['job_title'] ?? null,
                 ],
             );
         }

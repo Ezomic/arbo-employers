@@ -45,6 +45,11 @@ const mainNavItems: NavItem[] = [
 
         <SidebarFooter>
             <NavUser />
+            <div class="px-2 pb-1">
+                <Link href="/privacy" class="text-xs text-muted-foreground hover:underline">
+                    Privacyverklaring
+                </Link>
+            </div>
         </SidebarFooter>
     </Sidebar>
     <slot />

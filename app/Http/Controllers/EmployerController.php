@@ -28,6 +28,7 @@ class EmployerController extends Controller
             'contracts' => $employer->contracts()->latest()->get(),
             'organizationalUnits' => $employer->organizationalUnits()->oldest()->get(),
             'employees' => $employer->employees()->with('organizationalUnit')->latest()->get(),
+            'contactPersons' => $employer->contactPersons()->oldest()->get(),
         ]);
     }
 }
