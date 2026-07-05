@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use RobbinThijssen\IdentitySsoKit\Concerns\HasTenantScope;
 
-#[Fillable(['id', 'tenant_id', 'name'])]
+#[Fillable(['id', 'tenant_id', 'name', 'address_line_1', 'address_line_2', 'postal_code', 'city'])]
 class Employer extends Model
 {
     use HasTenantScope;
@@ -38,5 +38,13 @@ class Employer extends Model
     public function organizationalUnits(): HasMany
     {
         return $this->hasMany(OrganizationalUnit::class);
+    }
+
+    /**
+     * @return HasMany<ContactPerson, $this>
+     */
+    public function contactPersons(): HasMany
+    {
+        return $this->hasMany(ContactPerson::class);
     }
 }

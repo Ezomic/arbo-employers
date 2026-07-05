@@ -42,6 +42,11 @@ class CaseOfficersClient extends InternalApiClient
         return $this->get("employers/{$employerId}/organizational-units", ['tenant_id' => $tenantId]);
     }
 
+    public function getContactPersons(string $tenantId, string $employerId): array
+    {
+        return $this->get("employers/{$employerId}/contact-persons", ['tenant_id' => $tenantId]);
+    }
+
     public function createEmployee(string $tenantId, string $employerId, array $employee): array
     {
         return $this->post("employers/{$employerId}/employees", [

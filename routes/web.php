@@ -13,6 +13,8 @@ Route::get('login', RedirectToIdentityController::class)->name('login');
 Route::get('sso/callback', SsoCallbackController::class)->name('sso.callback');
 Route::post('logout', LogoutController::class)->middleware('auth')->name('logout');
 
+Route::get('privacy', fn () => inertia('Privacy'))->name('privacy');
+
 Route::middleware(['auth'])->group(function () {
     Route::redirect('/', '/employer')->name('home');
     Route::redirect('dashboard', '/employer')->name('dashboard');
