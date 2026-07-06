@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\EmployeeImportController::store
-* @see app/Http/Controllers/EmployeeImportController.php:19
+* @see app/Http/Controllers/EmployeeImportController.php:20
 * @route '/employer/employee-imports'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -16,7 +16,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::store
-* @see app/Http/Controllers/EmployeeImportController.php:19
+* @see app/Http/Controllers/EmployeeImportController.php:20
 * @route '/employer/employee-imports'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::store
-* @see app/Http/Controllers/EmployeeImportController.php:19
+* @see app/Http/Controllers/EmployeeImportController.php:20
 * @route '/employer/employee-imports'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -35,7 +35,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::store
-* @see app/Http/Controllers/EmployeeImportController.php:19
+* @see app/Http/Controllers/EmployeeImportController.php:20
 * @route '/employer/employee-imports'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -45,7 +45,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::store
-* @see app/Http/Controllers/EmployeeImportController.php:19
+* @see app/Http/Controllers/EmployeeImportController.php:20
 * @route '/employer/employee-imports'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -57,7 +57,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::status
-* @see app/Http/Controllers/EmployeeImportController.php:31
+* @see app/Http/Controllers/EmployeeImportController.php:37
 * @route '/employer/employee-imports/{import}'
 */
 export const status = (args: { import: string | number } | [importParam: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -72,7 +72,7 @@ status.definition = {
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::status
-* @see app/Http/Controllers/EmployeeImportController.php:31
+* @see app/Http/Controllers/EmployeeImportController.php:37
 * @route '/employer/employee-imports/{import}'
 */
 status.url = (args: { import: string | number } | [importParam: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -99,7 +99,7 @@ status.url = (args: { import: string | number } | [importParam: string | number 
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::status
-* @see app/Http/Controllers/EmployeeImportController.php:31
+* @see app/Http/Controllers/EmployeeImportController.php:37
 * @route '/employer/employee-imports/{import}'
 */
 status.get = (args: { import: string | number } | [importParam: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -109,7 +109,7 @@ status.get = (args: { import: string | number } | [importParam: string | number 
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::status
-* @see app/Http/Controllers/EmployeeImportController.php:31
+* @see app/Http/Controllers/EmployeeImportController.php:37
 * @route '/employer/employee-imports/{import}'
 */
 status.head = (args: { import: string | number } | [importParam: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -119,7 +119,7 @@ status.head = (args: { import: string | number } | [importParam: string | number
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::status
-* @see app/Http/Controllers/EmployeeImportController.php:31
+* @see app/Http/Controllers/EmployeeImportController.php:37
 * @route '/employer/employee-imports/{import}'
 */
 const statusForm = (args: { import: string | number } | [importParam: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -129,7 +129,7 @@ const statusForm = (args: { import: string | number } | [importParam: string | n
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::status
-* @see app/Http/Controllers/EmployeeImportController.php:31
+* @see app/Http/Controllers/EmployeeImportController.php:37
 * @route '/employer/employee-imports/{import}'
 */
 statusForm.get = (args: { import: string | number } | [importParam: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -139,7 +139,7 @@ statusForm.get = (args: { import: string | number } | [importParam: string | num
 
 /**
 * @see \App\Http\Controllers\EmployeeImportController::status
-* @see app/Http/Controllers/EmployeeImportController.php:31
+* @see app/Http/Controllers/EmployeeImportController.php:37
 * @route '/employer/employee-imports/{import}'
 */
 statusForm.head = (args: { import: string | number } | [importParam: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

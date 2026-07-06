@@ -11,6 +11,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
+use Inertia\Inertia;
 
 class EmployeeController extends Controller
 {
@@ -59,10 +60,17 @@ class EmployeeController extends Controller
     /** @param Collection<string, OrganizationalUnit> $allUnits */
     private function findLegalEntity(?string $unitId, Collection $allUnits): ?string
     {
-        if ($unitId === null) return null;
+        if ($unitId === null) {
+            return null;
+        }
         $unit = $allUnits[$unitId] ?? null;
-        if ($unit === null) return null;
-        if ($unit->is_legal_entity) return $unit->name;
+        if ($unit === null) {
+            return null;
+        }
+        if ($unit->is_legal_entity) {
+            return $unit->name;
+        }
+
         return $this->findLegalEntity($unit->parent_id, $allUnits);
     }
 
@@ -83,6 +91,11 @@ class EmployeeController extends Controller
         $client->createEmployee($user->tenant_id, $user->employer_id, $data);
 
         $sync->sync($user->tenant_id, $user->employer_id);
+
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => "Employee {$data['first_name']} {$data['last_name']} added.",
+        ]);
 
         return to_route('employer.show');
     }
