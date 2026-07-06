@@ -27,6 +27,8 @@
         <env name="DB_DATABASE" value=":memory:"/>
         <env name="DB_URL" value=""/>
         <env name="CASE_OFFICERS_SERVICE_TOKEN" value="test-token"/>
+        <env name="CASE_OFFICERS_INBOUND_TOKEN" value="test-inbound-token"/>
+        <env name="IDENTITY_SERVICE_TOKEN" value="test-token"/>
         <env name="MAIL_MAILER" value="array"/>
         <env name="QUEUE_CONNECTION" value="sync"/>
         <env name="SESSION_DRIVER" value="array"/>
