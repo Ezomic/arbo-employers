@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\UserController::store
-* @see app/Http/Controllers/UserController.php:30
+* @see app/Http/Controllers/UserController.php:31
 * @route '/users'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\UserController::store
-* @see app/Http/Controllers/UserController.php:30
+* @see app/Http/Controllers/UserController.php:31
 * @route '/users'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\UserController::store
-* @see app/Http/Controllers/UserController.php:30
+* @see app/Http/Controllers/UserController.php:31
 * @route '/users'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\UserController::store
-* @see app/Http/Controllers/UserController.php:30
+* @see app/Http/Controllers/UserController.php:31
 * @route '/users'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\UserController::store
-* @see app/Http/Controllers/UserController.php:30
+* @see app/Http/Controllers/UserController.php:31
 * @route '/users'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -138,7 +138,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\UserController::update
-* @see app/Http/Controllers/UserController.php:46
+* @see app/Http/Controllers/UserController.php:48
 * @route '/users/{uuid}'
 */
 export const update = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -153,7 +153,7 @@ update.definition = {
 
 /**
 * @see \App\Http\Controllers\UserController::update
-* @see app/Http/Controllers/UserController.php:46
+* @see app/Http/Controllers/UserController.php:48
 * @route '/users/{uuid}'
 */
 update.url = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -180,7 +180,7 @@ update.url = (args: { uuid: string | number } | [uuid: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\UserController::update
-* @see app/Http/Controllers/UserController.php:46
+* @see app/Http/Controllers/UserController.php:48
 * @route '/users/{uuid}'
 */
 update.put = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -190,7 +190,7 @@ update.put = (args: { uuid: string | number } | [uuid: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\UserController::update
-* @see app/Http/Controllers/UserController.php:46
+* @see app/Http/Controllers/UserController.php:48
 * @route '/users/{uuid}'
 */
 const updateForm = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -205,7 +205,7 @@ const updateForm = (args: { uuid: string | number } | [uuid: string | number ] |
 
 /**
 * @see \App\Http\Controllers\UserController::update
-* @see app/Http/Controllers/UserController.php:46
+* @see app/Http/Controllers/UserController.php:48
 * @route '/users/{uuid}'
 */
 updateForm.put = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -222,7 +222,7 @@ update.form = updateForm
 
 /**
 * @see \App\Http\Controllers\UserController::destroy
-* @see app/Http/Controllers/UserController.php:59
+* @see app/Http/Controllers/UserController.php:66
 * @route '/users/{uuid}'
 */
 export const destroy = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -237,7 +237,7 @@ destroy.definition = {
 
 /**
 * @see \App\Http\Controllers\UserController::destroy
-* @see app/Http/Controllers/UserController.php:59
+* @see app/Http/Controllers/UserController.php:66
 * @route '/users/{uuid}'
 */
 destroy.url = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -264,7 +264,7 @@ destroy.url = (args: { uuid: string | number } | [uuid: string | number ] | stri
 
 /**
 * @see \App\Http\Controllers\UserController::destroy
-* @see app/Http/Controllers/UserController.php:59
+* @see app/Http/Controllers/UserController.php:66
 * @route '/users/{uuid}'
 */
 destroy.delete = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'delete'> => ({
@@ -274,7 +274,7 @@ destroy.delete = (args: { uuid: string | number } | [uuid: string | number ] | s
 
 /**
 * @see \App\Http\Controllers\UserController::destroy
-* @see app/Http/Controllers/UserController.php:59
+* @see app/Http/Controllers/UserController.php:66
 * @route '/users/{uuid}'
 */
 const destroyForm = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -289,7 +289,7 @@ const destroyForm = (args: { uuid: string | number } | [uuid: string | number ] 
 
 /**
 * @see \App\Http\Controllers\UserController::destroy
-* @see app/Http/Controllers/UserController.php:59
+* @see app/Http/Controllers/UserController.php:66
 * @route '/users/{uuid}'
 */
 destroyForm.delete = (args: { uuid: string | number } | [uuid: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

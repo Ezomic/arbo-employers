@@ -11,7 +11,9 @@ return new class extends Migration
         Schema::create('cases', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('tenant_id');
+            $table->uuid('employer_id');
             $table->uuid('employee_id');
+            $table->string('case_type');
             $table->string('status')->default('open');
             $table->date('opened_at');
             $table->date('expected_return_date')->nullable();
@@ -19,6 +21,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->index(['tenant_id', 'status']);
+            $table->index('employer_id');
             $table->index('employee_id');
         });
     }

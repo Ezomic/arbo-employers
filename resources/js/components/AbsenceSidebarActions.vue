@@ -14,12 +14,13 @@ import {
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { search as employeeSearch } from '@/routes/employees';
 import { close as closeRoute, mutate as mutateRoute, store as storeRoute } from '@/routes/absences';
+import { search as employeeSearch } from '@/routes/employees';
 
 type OpenCase = { id: string; employee: { first_name: string; last_name: string } | null; expected_return_date: string | null };
+type CaseTypeOption = { value: string; label: string };
 
-const page = usePage<{ sidebarOpenCases: OpenCase[] }>();
+const page = usePage<{ sidebarOpenCases: OpenCase[]; caseTypes: CaseTypeOption[] }>();
 
 type DialogType = 'absence' | 'mutate' | 'recover' | null;
 const openDialog = ref<DialogType>(null);
@@ -58,7 +59,7 @@ const selectedCaseId = ref<string>('');
             <Form
                 v-bind="storeRoute.form()"
                 v-slot="{ errors, processing }"
-                :reset-on-success="['employee_id', 'start_date']"
+                :reset-on-success="['employee_id', 'case_type', 'start_date']"
                 class="space-y-4"
                 @success="openDialog = null"
             >
@@ -70,6 +71,18 @@ const selectedCaseId = ref<string>('');
                         :error="errors.employee_id"
                     />
                     <InputError :message="errors.employee_id" />
+                </div>
+                <div class="grid gap-2">
+                    <Label for="ab_case_type">Type</Label>
+                    <select
+                        id="ab_case_type"
+                        name="case_type"
+                        required
+                        class="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs"
+                    >
+                        <option v-for="type in page.props.caseTypes" :key="type.value" :value="type.value">{{ type.label }}</option>
+                    </select>
+                    <InputError :message="errors.case_type" />
                 </div>
                 <div class="grid gap-2">
                     <Label for="ab_start_date">Start date</Label>

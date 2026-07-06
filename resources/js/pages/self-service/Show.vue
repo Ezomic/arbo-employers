@@ -25,7 +25,10 @@ const props = defineProps<{
 }>();
 
 function formatDate(dateStr: string | null): string {
-    if (!dateStr) return '—';
+    if (!dateStr) {
+return '—';
+}
+
     return new Date(dateStr).toLocaleDateString('nl-NL', { day: 'numeric', month: 'long', year: 'numeric' });
 }
 </script>

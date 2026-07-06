@@ -26,6 +26,7 @@ function onInput(e: Event) {
 
     if (val.length < 3) {
         open.value = false;
+
         return;
     }
 

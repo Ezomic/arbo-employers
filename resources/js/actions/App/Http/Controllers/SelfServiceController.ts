@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\SelfServiceController::show
 * @see app/Http/Controllers/SelfServiceController.php:15
@@ -161,9 +161,6 @@ gdprExportForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 
 gdprExport.form = gdprExportForm
 
-const selfService = {
-    show: Object.assign(show, show),
-    gdprExport: Object.assign(gdprExport, gdprExport),
-}
+const SelfServiceController = { show, gdprExport }
 
-export default selfService
+export default SelfServiceController

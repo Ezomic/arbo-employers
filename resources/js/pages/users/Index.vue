@@ -10,7 +10,6 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { destroy, store, update } from '@/routes/users';
 
-type Employer = { id: string; name: string };
 type IdentityUser = {
     id: string;
     name: string;
@@ -21,9 +20,8 @@ type IdentityUser = {
     created_at: string;
 };
 
-const props = defineProps<{
+defineProps<{
     users: IdentityUser[];
-    employers: Employer[];
 }>();
 
 const page = usePage<{ flash?: { temporaryPassword?: string } }>();
@@ -37,7 +35,7 @@ const editingUser = ref<IdentityUser | null>(null);
 
     <div class="flex flex-col gap-6 p-4">
         <div class="flex items-center justify-between">
-            <Heading title="Users" description="Manage employer contacts for this organisation." />
+            <Heading title="Users" description="Manage user accounts for your own employer." />
             <Button size="sm" @click="showCreate = true">
                 <Plus class="mr-1 size-4" />
                 Add user
@@ -56,7 +54,6 @@ const editingUser = ref<IdentityUser | null>(null);
                     <tr class="border-b bg-muted/50">
                         <th class="px-4 py-3 text-left font-medium">Name</th>
                         <th class="px-4 py-3 text-left font-medium">Email</th>
-                        <th class="px-4 py-3 text-left font-medium">Employer</th>
                         <th class="px-4 py-3 text-left font-medium">Since</th>
                         <th class="px-4 py-3"></th>
                     </tr>
@@ -65,7 +62,6 @@ const editingUser = ref<IdentityUser | null>(null);
                     <tr v-for="user in users" :key="user.id" class="border-b last:border-0 hover:bg-muted/30 cursor-pointer" @click="editingUser = user">
                         <td class="px-4 py-3 font-medium">{{ user.name }}</td>
                         <td class="px-4 py-3 text-muted-foreground">{{ user.email }}</td>
-                        <td class="px-4 py-3 text-muted-foreground">{{ employers.find(e => e.id === user.scope_id)?.name ?? '—' }}</td>
                         <td class="px-4 py-3 text-muted-foreground">{{ user.created_at.slice(0, 10) }}</td>
                         <td class="px-4 py-3 text-right">
                             <Form v-bind="destroy.form({ uuid: user.id })" class="inline" @click.stop>
@@ -76,7 +72,7 @@ const editingUser = ref<IdentityUser | null>(null);
                         </td>
                     </tr>
                     <tr v-if="users.length === 0">
-                        <td colspan="5" class="px-4 py-6 text-center text-muted-foreground">No users yet.</td>
+                        <td colspan="4" class="px-4 py-6 text-center text-muted-foreground">No users yet.</td>
                     </tr>
                 </tbody>
             </table>
@@ -92,7 +88,7 @@ const editingUser = ref<IdentityUser | null>(null);
             <Form
                 v-bind="store.form()"
                 v-slot="{ errors, processing }"
-                :reset-on-success="['name', 'email', 'scope_id']"
+                :reset-on-success="['name', 'email']"
                 class="space-y-4"
                 @success="showCreate = false"
             >
@@ -105,18 +101,6 @@ const editingUser = ref<IdentityUser | null>(null);
                     <Label for="new_email">Email</Label>
                     <Input id="new_email" type="email" name="email" required />
                     <InputError :message="errors.email" />
-                </div>
-                <div class="grid gap-2">
-                    <Label for="new_scope_id">Employer</Label>
-                    <select
-                        id="new_scope_id"
-                        name="scope_id"
-                        class="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs"
-                    >
-                        <option value="">— no specific employer —</option>
-                        <option v-for="emp in employers" :key="emp.id" :value="emp.id">{{ emp.name }}</option>
-                    </select>
-                    <InputError :message="errors.scope_id" />
                 </div>
                 <Button type="submit" :disabled="processing">Create user</Button>
             </Form>
@@ -144,18 +128,6 @@ const editingUser = ref<IdentityUser | null>(null);
                     <Label for="edit_email">Email</Label>
                     <Input id="edit_email" type="email" name="email" :default-value="editingUser.email" required />
                     <InputError :message="errors.email" />
-                </div>
-                <div class="grid gap-2">
-                    <Label for="edit_scope_id">Employer</Label>
-                    <select
-                        id="edit_scope_id"
-                        name="scope_id"
-                        class="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs"
-                    >
-                        <option value="">— no specific employer —</option>
-                        <option v-for="emp in employers" :key="emp.id" :value="emp.id" :selected="emp.id === editingUser.scope_id">{{ emp.name }}</option>
-                    </select>
-                    <InputError :message="errors.scope_id" />
                 </div>
                 <div class="flex gap-2">
                     <Button type="submit" :disabled="processing">Save</Button>

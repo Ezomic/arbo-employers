@@ -7,8 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { close as closeAbsence, mutate as mutateAbsence, store as storeAbsence } from '@/routes/absences';
-import { store as storeEmployee } from '@/routes/employees';
 import { show as importStatusRoute, store as storeImport } from '@/routes/employee-imports';
+import { store as storeEmployee } from '@/routes/employees';
 
 type Employer = { id: string; name: string };
 type Contract = {
@@ -67,7 +67,9 @@ const pollingImportId = ref<number | null>(page.props.importId ?? null);
 const importStatusText = ref<string>('');
 
 function pollImportStatus() {
-    if (pollingImportId.value === null) return;
+    if (pollingImportId.value === null) {
+return;
+}
 
     fetch(importStatusRoute(pollingImportId.value).url)
         .then((r) => r.json())

@@ -25,13 +25,14 @@ class AbsenceController extends Controller
                 'uuid',
                 Rule::exists('employees', 'id')->where('employer_id', $user->employer_id),
             ],
-            'case_type' => ['required', Rule::enum(CaseType::class)],
+            'case_type' => ['required', Rule::enum(CaseType::class)->only($this->employerVisibleCaseTypes())],
             'start_date' => ['required', 'date'],
         ]);
 
         $case = CaseFile::query()->create([
             'id' => (string) Str::uuid(),
             'tenant_id' => $user->tenant_id,
+            'employer_id' => $user->employer_id,
             'employee_id' => $data['employee_id'],
             'case_type' => $data['case_type'],
             'status' => 'open',
@@ -54,6 +55,7 @@ class AbsenceController extends Controller
 
         $caseFile = CaseFile::query()
             ->where('tenant_id', $user->tenant_id)
+            ->where('employer_id', $user->employer_id)
             ->where('status', 'open')
             ->findOrFail($case);
 
@@ -75,6 +77,7 @@ class AbsenceController extends Controller
 
         $caseFile = CaseFile::query()
             ->where('tenant_id', $user->tenant_id)
+            ->where('employer_id', $user->employer_id)
             ->where('status', 'open')
             ->findOrFail($case);
 
@@ -86,6 +89,14 @@ class AbsenceController extends Controller
         $this->syncToCaseOfficers($client, $caseFile->fresh(), 'close');
 
         return to_route('employer.show');
+    }
+
+    /**
+     * @return array<int, CaseType>
+     */
+    private function employerVisibleCaseTypes(): array
+    {
+        return array_values(array_filter(CaseType::cases(), fn (CaseType $type) => $type->employerVisible()));
     }
 
     private function syncToCaseOfficers(CaseOfficersClient $client, CaseFile $case, string $action): void

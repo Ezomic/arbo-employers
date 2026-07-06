@@ -32,7 +32,7 @@ class SelfServiceController extends Controller
             'cases' => $cases->map(fn ($c) => [
                 'id' => $c->id,
                 'status' => $c->status,
-                'opened_at' => $c->opened_at?->toDateString(),
+                'opened_at' => $c->opened_at->toDateString(),
                 'closed_at' => $c->closed_at?->toDateString(),
                 'expected_return_date' => $c->expected_return_date?->toDateString(),
             ]),
@@ -62,7 +62,7 @@ class SelfServiceController extends Controller
             'cases' => $cases->map(fn ($c) => [
                 'id' => $c->id,
                 'status' => $c->status,
-                'opened_at' => $c->opened_at?->toDateString(),
+                'opened_at' => $c->opened_at->toDateString(),
                 'closed_at' => $c->closed_at?->toDateString(),
                 'expected_return_date' => $c->expected_return_date?->toDateString(),
             ])->all(),
@@ -75,8 +75,11 @@ class SelfServiceController extends Controller
             now()->format('Y-m-d'),
         );
 
+        $json = json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        abort_if($json === false, 500, 'Failed to generate GDPR export.');
+
         return response(
-            json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE),
+            $json,
             200,
             [
                 'Content-Type' => 'application/json',

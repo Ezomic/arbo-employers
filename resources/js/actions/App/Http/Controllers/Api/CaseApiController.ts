@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\Api\CaseApiController::sync
-* @see app/Http/Controllers/Api/CaseApiController.php:17
+* @see app/Http/Controllers/Api/CaseApiController.php:13
 * @route '/api/cases/{id}'
 */
 export const sync = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -16,7 +16,7 @@ sync.definition = {
 
 /**
 * @see \App\Http\Controllers\Api\CaseApiController::sync
-* @see app/Http/Controllers/Api/CaseApiController.php:17
+* @see app/Http/Controllers/Api/CaseApiController.php:13
 * @route '/api/cases/{id}'
 */
 sync.url = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -43,7 +43,7 @@ sync.url = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Api\CaseApiController::sync
-* @see app/Http/Controllers/Api/CaseApiController.php:17
+* @see app/Http/Controllers/Api/CaseApiController.php:13
 * @route '/api/cases/{id}'
 */
 sync.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'put'> => ({
@@ -53,7 +53,7 @@ sync.put = (args: { id: string | number } | [id: string | number ] | string | nu
 
 /**
 * @see \App\Http\Controllers\Api\CaseApiController::sync
-* @see app/Http/Controllers/Api/CaseApiController.php:17
+* @see app/Http/Controllers/Api/CaseApiController.php:13
 * @route '/api/cases/{id}'
 */
 const syncForm = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -68,7 +68,7 @@ const syncForm = (args: { id: string | number } | [id: string | number ] | strin
 
 /**
 * @see \App\Http\Controllers\Api\CaseApiController::sync
-* @see app/Http/Controllers/Api/CaseApiController.php:17
+* @see app/Http/Controllers/Api/CaseApiController.php:13
 * @route '/api/cases/{id}'
 */
 syncForm.put = (args: { id: string | number } | [id: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
