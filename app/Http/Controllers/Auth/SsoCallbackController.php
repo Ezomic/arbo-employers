@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
 use App\Models\Tenant;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
@@ -31,6 +32,9 @@ class SsoCallbackController extends Controller
             );
         }
 
+        $isEmployee = $verified->scopeId !== null
+            && Employee::query()->where('id', $verified->scopeId)->exists();
+
         $user = User::query()->updateOrCreate(
             ['id' => $verified->userUuid],
             [
@@ -38,9 +42,12 @@ class SsoCallbackController extends Controller
                 'email' => $verified->email,
                 'current_role' => $verified->role,
                 'tenant_id' => $verified->tenantId,
-                'employer_id' => $verified->scopeId,
+                'employer_id' => $isEmployee ? null : $verified->scopeId,
+                'employee_id' => $isEmployee ? $verified->scopeId : null,
                 'accessible_apps' => $verified->accessibleApps,
                 'identity_synced_at' => now(),
+                'last_login_at' => now(),
+                'last_login_ip' => $request->ip(),
             ],
         );
 
