@@ -2,14 +2,10 @@
 
 namespace App\Services;
 
+use App\Models\CaseFile;
 use Illuminate\Http\UploadedFile;
 use RobbinThijssen\IdentitySsoKit\Api\InternalApiClient;
 
-/**
- * Case Officers owns Employer/Contract/Employee master data — this app only
- * ever writes those through its internal API, then caches the result
- * locally so its own pages don't need a live call on every read.
- */
 class CaseOfficersClient extends InternalApiClient
 {
     protected function baseUrl(): string
@@ -94,19 +90,16 @@ class CaseOfficersClient extends InternalApiClient
         return $this->get("employee-imports/{$importId}", ['tenant_id' => $tenantId]);
     }
 
-    /**
-     * Registers the start of an absence course for one of this employer's
-     * own employees — this is what actually creates the case on Case
-     * Officers' side.
-     *
-     * @return array<string, mixed>
-     */
-    public function createCase(string $tenantId, string $employeeId, string $startDate): array
+    public function syncCase(CaseFile $case): void
     {
-        return $this->post('cases', [
-            'tenant_id' => $tenantId,
-            'employee_id' => $employeeId,
-            'start_date' => $startDate,
+        $this->put("cases/{$case->id}", [
+            'tenant_id' => $case->tenant_id,
+            'employee_id' => $case->employee_id,
+            'case_type' => $case->case_type,
+            'status' => $case->status,
+            'opened_at' => $case->opened_at->toDateString(),
+            'expected_return_date' => $case->expected_return_date?->toDateString(),
+            'closed_at' => $case->closed_at?->toDateString(),
         ]);
     }
 }

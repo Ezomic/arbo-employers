@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\EmployerController::show
-* @see app/Http/Controllers/EmployerController.php:17
+* @see app/Http/Controllers/EmployerController.php:19
 * @route '/employer'
 */
 export const show = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\EmployerController::show
-* @see app/Http/Controllers/EmployerController.php:17
+* @see app/Http/Controllers/EmployerController.php:19
 * @route '/employer'
 */
 show.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ show.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\EmployerController::show
-* @see app/Http/Controllers/EmployerController.php:17
+* @see app/Http/Controllers/EmployerController.php:19
 * @route '/employer'
 */
 show.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ show.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\EmployerController::show
-* @see app/Http/Controllers/EmployerController.php:17
+* @see app/Http/Controllers/EmployerController.php:19
 * @route '/employer'
 */
 show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ show.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\EmployerController::show
-* @see app/Http/Controllers/EmployerController.php:17
+* @see app/Http/Controllers/EmployerController.php:19
 * @route '/employer'
 */
 const showForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const showForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\EmployerController::show
-* @see app/Http/Controllers/EmployerController.php:17
+* @see app/Http/Controllers/EmployerController.php:19
 * @route '/employer'
 */
 showForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ showForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\EmployerController::show
-* @see app/Http/Controllers/EmployerController.php:17
+* @see app/Http/Controllers/EmployerController.php:19
 * @route '/employer'
 */
 showForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -38,6 +38,12 @@ return [
     'case_officers' => [
         'base_url' => env('CASE_OFFICERS_BASE_URL', 'https://case-officers.test'),
         'token' => env('CASE_OFFICERS_SERVICE_TOKEN'),
+        'inbound_token' => env('CASE_OFFICERS_INBOUND_TOKEN'),
+    ],
+
+    'identity' => [
+        'base_url' => env('IDENTITY_BASE_URL', 'https://identity.test'),
+        'token' => env('IDENTITY_SERVICE_TOKEN'),
     ],
 
 ];

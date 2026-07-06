@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Link } from '@inertiajs/vue3';
-import { LayoutGrid } from '@lucide/vue';
+import { LayoutGrid, UserCog } from '@lucide/vue';
+import AbsenceSidebarActions from '@/components/AbsenceSidebarActions.vue';
 import AppLogo from '@/components/AppLogo.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
@@ -14,6 +15,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { show } from '@/routes/employer';
+import { index as usersIndex } from '@/routes/users';
 import type { NavItem } from '@/types';
 
 const mainNavItems: NavItem[] = [
@@ -21,6 +23,11 @@ const mainNavItems: NavItem[] = [
         title: 'My Employer',
         href: show(),
         icon: LayoutGrid,
+    },
+    {
+        title: 'Users',
+        href: usersIndex(),
+        icon: UserCog,
     },
 ];
 </script>
@@ -44,6 +51,7 @@ const mainNavItems: NavItem[] = [
         </SidebarContent>
 
         <SidebarFooter>
+            <AbsenceSidebarActions />
             <NavUser />
             <div class="px-2 pb-1">
                 <Link href="/privacy" class="text-xs text-muted-foreground hover:underline">

@@ -6,9 +6,9 @@ import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { store as storeAbsence } from '@/routes/absences';
-import { store as storeEmployee } from '@/routes/employees';
+import { close as closeAbsence, mutate as mutateAbsence, store as storeAbsence } from '@/routes/absences';
 import { show as importStatusRoute, store as storeImport } from '@/routes/employee-imports';
+import { store as storeEmployee } from '@/routes/employees';
 
 type Employer = { id: string; name: string };
 type Contract = {
@@ -33,11 +33,24 @@ type Employee = {
     organizational_unit: OrganizationalUnit | null;
 };
 
+type OpenCase = {
+    id: string;
+    employee_id: string;
+    status: string;
+    opened_at: string;
+    expected_return_date: string | null;
+    employee: { id: string; first_name: string; last_name: string };
+};
+
+type CaseTypeOption = { value: string; label: string };
+
 const props = defineProps<{
     employer: Employer;
     contracts: Contract[];
     organizationalUnits: OrganizationalUnit[];
     employees: Employee[];
+    openCases: OpenCase[];
+    caseTypes: CaseTypeOption[];
 }>();
 
 const unitDepths = computed(() => {
@@ -54,7 +67,9 @@ const pollingImportId = ref<number | null>(page.props.importId ?? null);
 const importStatusText = ref<string>('');
 
 function pollImportStatus() {
-    if (pollingImportId.value === null) return;
+    if (pollingImportId.value === null) {
+return;
+}
 
     fetch(importStatusRoute(pollingImportId.value).url)
         .then((r) => r.json())
@@ -118,6 +133,54 @@ onMounted(() => {
                 </ul>
             </div>
 
+            <div v-if="openCases.length > 0" class="rounded-lg border p-4 md:col-span-2">
+                <h2 class="mb-4 font-medium">Open cases</h2>
+                <div class="space-y-6">
+                    <div v-for="openCase in openCases" :key="openCase.id" class="space-y-3 border-t pt-4 first:border-t-0 first:pt-0">
+                        <p class="font-medium text-sm">
+                            {{ openCase.employee.first_name }} {{ openCase.employee.last_name }}
+                            <span class="ml-2 text-xs text-muted-foreground">open since {{ openCase.opened_at.slice(0, 10) }}</span>
+                        </p>
+
+                        <div class="grid gap-4 sm:grid-cols-2">
+                            <Form
+                                v-bind="mutateAbsence.form({ case: openCase.id })"
+                                v-slot="{ errors, processing }"
+                                class="space-y-2"
+                            >
+                                <Label :for="`mut_date_${openCase.id}`" class="text-xs font-medium">Report mutation — expected return date</Label>
+                                <Input
+                                    :id="`mut_date_${openCase.id}`"
+                                    type="date"
+                                    name="expected_return_date"
+                                    :default-value="openCase.expected_return_date ?? undefined"
+                                    class="h-8 text-sm"
+                                />
+                                <InputError :message="errors.expected_return_date" />
+                                <Button type="submit" size="sm" :disabled="processing">Save mutation</Button>
+                            </Form>
+
+                            <Form
+                                v-bind="closeAbsence.form({ case: openCase.id })"
+                                v-slot="{ errors, processing }"
+                                class="space-y-2"
+                            >
+                                <Label :for="`rec_date_${openCase.id}`" class="text-xs font-medium">Report recovery — return date</Label>
+                                <Input
+                                    :id="`rec_date_${openCase.id}`"
+                                    type="date"
+                                    name="recovery_date"
+                                    required
+                                    class="h-8 text-sm"
+                                />
+                                <InputError :message="errors.recovery_date" />
+                                <Button type="submit" size="sm" variant="destructive" :disabled="processing">Close case</Button>
+                            </Form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="rounded-lg border p-4 md:col-span-2">
                 <h2 class="mb-4 font-medium">Report absence</h2>
                 <p class="mb-4 text-xs text-muted-foreground">
@@ -143,6 +206,21 @@ onMounted(() => {
                             </option>
                         </select>
                         <InputError :message="errors.employee_id" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="absence_case_type">Type dossier</Label>
+                        <select
+                            id="absence_case_type"
+                            name="case_type"
+                            required
+                            class="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs"
+                        >
+                            <option value="" disabled selected>Select a type</option>
+                            <option v-for="type in caseTypes" :key="type.value" :value="type.value">
+                                {{ type.label }}
+                            </option>
+                        </select>
+                        <InputError :message="errors.case_type" />
                     </div>
                     <div class="grid gap-2">
                         <Label for="start_date">Start date</Label>
