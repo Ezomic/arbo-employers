@@ -42,6 +42,11 @@ class UserController extends Controller
 
         $created = $identity->createUser($user->tenant_id, $data['name'], $data['email'], 'employer', $user->employer_id);
 
+        Inertia::flash('toast', [
+            'type' => 'success',
+            'message' => "User {$data['name']} created.",
+        ]);
+
         return to_route('users.index')->with('temporaryPassword', $created['temporary_password'] ?? null);
     }
 
@@ -60,6 +65,8 @@ class UserController extends Controller
 
         $identity->updateUser($user->tenant_id, $uuid, $data);
 
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'User updated.']);
+
         return to_route('users.index');
     }
 
@@ -72,6 +79,8 @@ class UserController extends Controller
         $this->abortUnlessOwnEmployerUser($identity, $user, $uuid);
 
         $identity->deleteUser($user->tenant_id, $uuid);
+
+        Inertia::flash('toast', ['type' => 'success', 'message' => 'User deleted.']);
 
         return to_route('users.index');
     }

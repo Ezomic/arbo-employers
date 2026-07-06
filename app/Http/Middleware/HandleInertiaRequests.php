@@ -70,6 +70,9 @@ class HandleInertiaRequests extends Middleware
                     ])
                     ->all();
             },
+            'flash' => [
+                'temporaryPassword' => fn () => $request->session()->get('temporaryPassword'),
+            ],
         ];
     }
 }
