@@ -35,6 +35,10 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('api-internal', function (Request $request) {
             return Limit::perMinute(300)->by($request->ip());
         });
+
+        RateLimiter::for('gdpr-export', function (Request $request) {
+            return Limit::perDay(5)->by((string) $request->user()?->id);
+        });
     }
 
     /**

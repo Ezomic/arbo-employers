@@ -22,7 +22,7 @@ Route::middleware(['auth'])->group(function () {
     Route::redirect('dashboard', '/employer')->name('dashboard');
 
     Route::get('self-service', [SelfServiceController::class, 'show'])->name('self-service.show');
-    Route::get('self-service/gdpr-export', [SelfServiceController::class, 'gdprExport'])->name('self-service.gdpr-export');
+    Route::get('self-service/gdpr-export', [SelfServiceController::class, 'gdprExport'])->middleware('throttle:gdpr-export')->name('self-service.gdpr-export');
 
     Route::get('employer', [EmployerController::class, 'show'])->name('employer.show');
     Route::get('employer/employees/search', [EmployeeController::class, 'search'])->name('employees.search');
