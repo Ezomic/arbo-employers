@@ -31,7 +31,7 @@ class AbsenceController extends Controller
         ]);
 
         $case = CaseFile::query()->create([
-            'id' => (string) Str::uuid(),
+            'id' => (string) Str::uuid7(),
             'tenant_id' => $user->tenant_id,
             'employer_id' => $user->employer_id,
             'employee_id' => $data['employee_id'],
