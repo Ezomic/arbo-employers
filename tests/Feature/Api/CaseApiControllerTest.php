@@ -54,6 +54,29 @@ test('sync rejects an employee that does not belong to the given tenant', functi
     $response->assertNotFound();
 });
 
+test('sync rejects a case_type that is not a known enum value', function () {
+    $tenantId = (string) Str::uuid();
+    $employer = Employer::query()->create(['id' => (string) Str::uuid(), 'tenant_id' => $tenantId, 'name' => 'Acme']);
+    $employee = Employee::query()->create([
+        'id' => (string) Str::uuid(),
+        'employer_id' => $employer->id,
+        'first_name' => 'Jane',
+        'last_name' => 'Doe',
+    ]);
+    $caseId = (string) Str::uuid();
+
+    $response = $this->withHeaders(apiHeaders())->putJson("/api/cases/{$caseId}", [
+        'tenant_id' => $tenantId,
+        'employee_id' => $employee->id,
+        'case_type' => 'not_a_real_case_type',
+        'status' => 'open',
+        'opened_at' => '2026-07-01',
+    ]);
+
+    $response->assertInvalid('case_type');
+    expect(CaseFile::query()->whereKey($caseId)->exists())->toBeFalse();
+});
+
 test('sync rejects requests without a valid bearer token', function () {
     $response = $this->putJson('/api/cases/'.(string) Str::uuid(), [
         'tenant_id' => (string) Str::uuid(),
