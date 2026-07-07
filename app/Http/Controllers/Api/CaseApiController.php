@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Enums\CaseType;
 use App\Http\Controllers\Controller;
 use App\Models\CaseFile;
 use App\Models\Employee;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Validation\Rule;
 
 class CaseApiController extends Controller
 {
@@ -15,7 +17,7 @@ class CaseApiController extends Controller
         $data = $request->validate([
             'tenant_id' => ['required', 'uuid'],
             'employee_id' => ['required', 'uuid'],
-            'case_type' => ['nullable', 'string'],
+            'case_type' => ['nullable', Rule::enum(CaseType::class)],
             'status' => ['required', 'string'],
             'opened_at' => ['required', 'date'],
             'expected_return_date' => ['nullable', 'date'],
