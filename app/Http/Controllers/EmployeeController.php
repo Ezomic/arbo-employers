@@ -17,6 +17,8 @@ class EmployeeController extends Controller
 {
     public function search(Request $request): JsonResponse
     {
+        $this->authorize('view-employees');
+
         /** @var User $user */
         $user = $request->user();
 
@@ -76,6 +78,8 @@ class EmployeeController extends Controller
 
     public function store(Request $request, CaseOfficersClient $client, EmployerSyncService $sync): RedirectResponse
     {
+        $this->authorize('manage-employees');
+
         $data = $request->validate([
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
