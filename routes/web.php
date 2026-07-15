@@ -27,6 +27,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('employer', [EmployerController::class, 'show'])->name('employer.show');
     Route::get('employer/employees/search', [EmployeeController::class, 'search'])->name('employees.search');
     Route::post('employer/employees', [EmployeeController::class, 'store'])->name('employees.store');
+    Route::get('employer/employees/{employee}/edit', [EmployeeController::class, 'edit'])->name('employees.edit');
+    Route::put('employer/employees/{employee}', [EmployeeController::class, 'update'])->name('employees.update');
     Route::post('employer/employee-imports', [EmployeeImportController::class, 'store'])->name('employee-imports.store');
     Route::get('employer/employee-imports/{import}', [EmployeeImportController::class, 'status'])->name('employee-imports.show');
     Route::post('employer/absences', [AbsenceController::class, 'store'])->name('absences.store');

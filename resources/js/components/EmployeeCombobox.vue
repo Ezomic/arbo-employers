@@ -35,7 +35,9 @@ function onInput(e: Event) {
 
     debounceTimer = setTimeout(async () => {
         try {
-            const res = await fetch(`${props.searchUrl}?q=${encodeURIComponent(val)}`);
+            const res = await fetch(
+                `${props.searchUrl}?q=${encodeURIComponent(val)}`,
+            );
             results.value = await res.json();
         } finally {
             loading.value = false;
@@ -76,7 +78,9 @@ function onBlur() {
             v-if="open"
             class="absolute z-50 mt-1 w-full rounded-md border bg-popover text-popover-foreground shadow-md"
         >
-            <p v-if="loading" class="px-3 py-2 text-sm text-muted-foreground">Searching…</p>
+            <p v-if="loading" class="px-3 py-2 text-sm text-muted-foreground">
+                Searching…
+            </p>
             <ul v-else-if="results.length > 0">
                 <li
                     v-for="item in results"
@@ -87,7 +91,9 @@ function onBlur() {
                     {{ item.label }}
                 </li>
             </ul>
-            <p v-else class="px-3 py-2 text-sm text-muted-foreground">No employees found.</p>
+            <p v-else class="px-3 py-2 text-sm text-muted-foreground">
+                No employees found.
+            </p>
         </div>
     </div>
 </template>

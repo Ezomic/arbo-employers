@@ -71,6 +71,18 @@ class CaseOfficersClient extends InternalApiClient
     }
 
     /**
+     * @param  array<string, mixed>  $employee
+     * @return array<string, mixed>
+     */
+    public function updateEmployee(string $tenantId, string $employerId, string $employeeId, array $employee): array
+    {
+        return $this->put("employers/{$employerId}/employees/{$employeeId}", [
+            'tenant_id' => $tenantId,
+            ...$employee,
+        ]);
+    }
+
+    /**
      * @return array<string, mixed>
      */
     public function importEmployees(string $tenantId, string $employerId, string $userId, UploadedFile $file): array

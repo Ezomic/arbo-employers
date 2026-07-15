@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { Form, Head, router, usePage } from '@inertiajs/vue3';
+import { Form, Head, Link, router, usePage } from '@inertiajs/vue3';
+import { Pencil } from '@lucide/vue';
 import { computed, onMounted, ref } from 'vue';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
@@ -17,7 +18,10 @@ import {
     show as importStatusRoute,
     store as storeImport,
 } from '@/routes/employee-imports';
-import { store as storeEmployee } from '@/routes/employees';
+import {
+    edit as editEmployee,
+    store as storeEmployee,
+} from '@/routes/employees';
 
 type Employer = { id: string; name: string };
 type Contract = {
@@ -404,15 +408,31 @@ onMounted(() => {
                     <li
                         v-for="employee in employees"
                         :key="employee.id"
-                        class="text-sm"
+                        class="flex items-center justify-between gap-2 text-sm"
                     >
-                        {{ employee.first_name }} {{ employee.last_name }}
-                        <span
-                            v-if="employee.organizational_unit"
-                            class="text-muted-foreground"
-                        >
-                            ({{ employee.organizational_unit.name }})
+                        <span>
+                            {{ employee.first_name }} {{ employee.last_name }}
+                            <span
+                                v-if="employee.organizational_unit"
+                                class="text-muted-foreground"
+                            >
+                                ({{ employee.organizational_unit.name }})
+                            </span>
                         </span>
+                        <Button
+                            variant="ghost"
+                            size="icon"
+                            as-child
+                            class="shrink-0 text-muted-foreground"
+                        >
+                            <Link
+                                :href="editEmployee(employee.id)"
+                                title="Edit employee"
+                                aria-label="Edit employee"
+                            >
+                                <Pencil class="size-4" />
+                            </Link>
+                        </Button>
                     </li>
                     <li
                         v-if="employees.length === 0"
@@ -438,6 +458,14 @@ onMounted(() => {
                         'last_name',
                         'email',
                         'employee_number',
+                        'date_of_birth',
+                        'gender',
+                        'nationality',
+                        'address_line_1',
+                        'address_line_2',
+                        'postal_code',
+                        'city',
+                        'country',
                     ]"
                     class="mb-6 max-w-md space-y-3"
                 >
@@ -455,6 +483,73 @@ onMounted(() => {
                         <Label for="email">Email</Label>
                         <Input id="email" type="email" name="email" />
                         <InputError :message="errors.email" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="date_of_birth">Date of birth</Label>
+                        <Input
+                            id="date_of_birth"
+                            type="date"
+                            name="date_of_birth"
+                        />
+                        <InputError :message="errors.date_of_birth" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="gender">Gender</Label>
+                        <select
+                            id="gender"
+                            name="gender"
+                            class="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs"
+                        >
+                            <option value="">Unspecified</option>
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                            <option value="other">Other</option>
+                        </select>
+                        <InputError :message="errors.gender" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="nationality"
+                            >Nationality (ISO 3166-1 alpha-3)</Label
+                        >
+                        <Input
+                            id="nationality"
+                            name="nationality"
+                            maxlength="3"
+                            placeholder="NLD"
+                        />
+                        <InputError :message="errors.nationality" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="address_line_1">Address line 1</Label>
+                        <Input id="address_line_1" name="address_line_1" />
+                        <InputError :message="errors.address_line_1" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="address_line_2">Address line 2</Label>
+                        <Input id="address_line_2" name="address_line_2" />
+                        <InputError :message="errors.address_line_2" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="postal_code">Postal code</Label>
+                        <Input id="postal_code" name="postal_code" />
+                        <InputError :message="errors.postal_code" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="city">City</Label>
+                        <Input id="city" name="city" />
+                        <InputError :message="errors.city" />
+                    </div>
+                    <div class="grid gap-2">
+                        <Label for="country"
+                            >Country (ISO 3166-1 alpha-2)</Label
+                        >
+                        <Input
+                            id="country"
+                            name="country"
+                            maxlength="2"
+                            placeholder="NL"
+                        />
+                        <InputError :message="errors.country" />
                     </div>
                     <div class="grid gap-2">
                         <Label for="organizational_unit_id"
