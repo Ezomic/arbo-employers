@@ -13,14 +13,29 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { close as closeRoute, mutate as mutateRoute, store as storeRoute } from '@/routes/absences';
+import {
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
+} from '@/components/ui/sidebar';
+import {
+    close as closeRoute,
+    mutate as mutateRoute,
+    store as storeRoute,
+} from '@/routes/absences';
 import { search as employeeSearch } from '@/routes/employees';
 
-type OpenCase = { id: string; employee: { first_name: string; last_name: string } | null; expected_return_date: string | null };
+type OpenCase = {
+    id: string;
+    employee: { first_name: string; last_name: string } | null;
+    expected_return_date: string | null;
+};
 type CaseTypeOption = { value: string; label: string };
 
-const page = usePage<{ sidebarOpenCases: OpenCase[]; caseTypes: CaseTypeOption[] }>();
+const page = usePage<{
+    sidebarOpenCases: OpenCase[];
+    caseTypes: CaseTypeOption[];
+}>();
 
 type DialogType = 'absence' | 'mutate' | 'recover' | null;
 const openDialog = ref<DialogType>(null);
@@ -51,7 +66,10 @@ const selectedCaseId = ref<string>('');
     </SidebarMenu>
 
     <!-- Report absence dialog -->
-    <Dialog :open="openDialog === 'absence'" @update:open="(v) => !v && (openDialog = null)">
+    <Dialog
+        :open="openDialog === 'absence'"
+        @update:open="(v) => !v && (openDialog = null)"
+    >
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>Report absence</DialogTitle>
@@ -80,27 +98,47 @@ const selectedCaseId = ref<string>('');
                         required
                         class="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs"
                     >
-                        <option v-for="type in page.props.caseTypes" :key="type.value" :value="type.value">{{ type.label }}</option>
+                        <option
+                            v-for="type in page.props.caseTypes"
+                            :key="type.value"
+                            :value="type.value"
+                        >
+                            {{ type.label }}
+                        </option>
                     </select>
                     <InputError :message="errors.case_type" />
                 </div>
                 <div class="grid gap-2">
                     <Label for="ab_start_date">Start date</Label>
-                    <Input id="ab_start_date" type="date" name="start_date" :default-value="today" required />
+                    <Input
+                        id="ab_start_date"
+                        type="date"
+                        name="start_date"
+                        :default-value="today"
+                        required
+                    />
                     <InputError :message="errors.start_date" />
                 </div>
-                <Button type="submit" :disabled="processing">Report absence</Button>
+                <Button type="submit" :disabled="processing"
+                    >Report absence</Button
+                >
             </Form>
         </DialogContent>
     </Dialog>
 
     <!-- Mutate absence dialog -->
-    <Dialog :open="openDialog === 'mutate'" @update:open="(v) => !v && (openDialog = null)">
+    <Dialog
+        :open="openDialog === 'mutate'"
+        @update:open="(v) => !v && (openDialog = null)"
+    >
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>Mutate absence</DialogTitle>
             </DialogHeader>
-            <p v-if="page.props.sidebarOpenCases.length === 0" class="text-sm text-muted-foreground">
+            <p
+                v-if="page.props.sidebarOpenCases.length === 0"
+                class="text-sm text-muted-foreground"
+            >
                 No open cases at the moment.
             </p>
             <Form
@@ -119,28 +157,50 @@ const selectedCaseId = ref<string>('');
                         class="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs"
                     >
                         <option value="" disabled>Select a case</option>
-                        <option v-for="c in page.props.sidebarOpenCases" :key="c.id" :value="c.id">
-                            {{ c.employee ? `${c.employee.first_name} ${c.employee.last_name}` : c.id }}
+                        <option
+                            v-for="c in page.props.sidebarOpenCases"
+                            :key="c.id"
+                            :value="c.id"
+                        >
+                            {{
+                                c.employee
+                                    ? `${c.employee.first_name} ${c.employee.last_name}`
+                                    : c.id
+                            }}
                         </option>
                     </select>
                 </div>
                 <div class="grid gap-2">
-                    <Label for="mut_expected_return_date">Expected return date</Label>
-                    <Input id="mut_expected_return_date" type="date" name="expected_return_date" />
+                    <Label for="mut_expected_return_date"
+                        >Expected return date</Label
+                    >
+                    <Input
+                        id="mut_expected_return_date"
+                        type="date"
+                        name="expected_return_date"
+                    />
                     <InputError :message="errors.expected_return_date" />
                 </div>
-                <Button type="submit" :disabled="processing || !selectedCaseId">Save mutation</Button>
+                <Button type="submit" :disabled="processing || !selectedCaseId"
+                    >Save mutation</Button
+                >
             </Form>
         </DialogContent>
     </Dialog>
 
     <!-- Report recovered dialog -->
-    <Dialog :open="openDialog === 'recover'" @update:open="(v) => !v && (openDialog = null)">
+    <Dialog
+        :open="openDialog === 'recover'"
+        @update:open="(v) => !v && (openDialog = null)"
+    >
         <DialogContent>
             <DialogHeader>
                 <DialogTitle>Report recovered</DialogTitle>
             </DialogHeader>
-            <p v-if="page.props.sidebarOpenCases.length === 0" class="text-sm text-muted-foreground">
+            <p
+                v-if="page.props.sidebarOpenCases.length === 0"
+                class="text-sm text-muted-foreground"
+            >
                 No open cases at the moment.
             </p>
             <Form
@@ -159,17 +219,35 @@ const selectedCaseId = ref<string>('');
                         class="h-9 rounded-md border border-input bg-transparent px-3 text-sm shadow-xs"
                     >
                         <option value="" disabled>Select a case</option>
-                        <option v-for="c in page.props.sidebarOpenCases" :key="c.id" :value="c.id">
-                            {{ c.employee ? `${c.employee.first_name} ${c.employee.last_name}` : c.id }}
+                        <option
+                            v-for="c in page.props.sidebarOpenCases"
+                            :key="c.id"
+                            :value="c.id"
+                        >
+                            {{
+                                c.employee
+                                    ? `${c.employee.first_name} ${c.employee.last_name}`
+                                    : c.id
+                            }}
                         </option>
                     </select>
                 </div>
                 <div class="grid gap-2">
                     <Label for="rec_recovery_date">Recovery date</Label>
-                    <Input id="rec_recovery_date" type="date" name="recovery_date" required />
+                    <Input
+                        id="rec_recovery_date"
+                        type="date"
+                        name="recovery_date"
+                        required
+                    />
                     <InputError :message="errors.recovery_date" />
                 </div>
-                <Button type="submit" variant="destructive" :disabled="processing || !selectedCaseId">Close case</Button>
+                <Button
+                    type="submit"
+                    variant="destructive"
+                    :disabled="processing || !selectedCaseId"
+                    >Close case</Button
+                >
             </Form>
         </DialogContent>
     </Dialog>

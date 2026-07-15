@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Address;
 use App\Models\ContactPerson;
 use App\Models\Contract;
 use App\Models\Employee;
@@ -63,7 +64,7 @@ class EmployerSyncService
         }
 
         foreach ($this->client->getEmployees($tenantId, $employerId) as $employee) {
-            Employee::query()->updateOrCreate(
+            $localEmployee = Employee::query()->updateOrCreate(
                 ['id' => $employee['id']],
                 [
                     'employer_id' => $employer->id,
@@ -73,8 +74,33 @@ class EmployerSyncService
                     'email' => $employee['email'],
                     'employee_number' => $employee['employee_number'],
                     'status' => $employee['status'],
+                    'date_of_birth' => $employee['date_of_birth'] ?? null,
+                    'gender' => $employee['gender'] ?? null,
+                    'nationality' => $employee['nationality'] ?? null,
                 ],
             );
+
+            $address = $employee['address'] ?? null;
+
+            if ($address !== null) {
+                Address::query()->updateOrCreate(
+                    ['id' => $address['id']],
+                    [
+                        'addressable_type' => Employee::class,
+                        'addressable_id' => $localEmployee->id,
+                        'address_line_1' => $address['address_line_1'],
+                        'address_line_2' => $address['address_line_2'] ?? null,
+                        'postal_code' => $address['postal_code'],
+                        'city' => $address['city'],
+                        'country' => $address['country'] ?? 'NL',
+                    ],
+                );
+            } else {
+                Address::query()
+                    ->where('addressable_type', Employee::class)
+                    ->where('addressable_id', $localEmployee->id)
+                    ->delete();
+            }
         }
 
         $incoming = $this->client->getContactPersons($tenantId, $employerId);
