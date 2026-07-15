@@ -40,6 +40,11 @@ class SsoCallbackController extends Controller
             [
                 'name' => $verified->name,
                 'email' => $verified->email,
+                'first_name' => $verified->firstName,
+                'last_name' => $verified->lastName,
+                'phone_number' => $verified->phoneNumber,
+                'preferred_locale' => $verified->preferredLocale,
+                'timezone' => $verified->timezone,
                 'current_role' => $verified->role,
                 'tenant_id' => $verified->tenantId,
                 'employer_id' => $isEmployee ? null : $verified->scopeId,

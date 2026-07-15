@@ -27,6 +27,11 @@ function ssoToken(string $privateKey, array $overrides = []): string
         'exp' => $now + 120,
         'email' => 'emma@client-company.test',
         'name' => 'Emma Employer',
+        'first_name' => 'Emma',
+        'last_name' => 'Employer',
+        'phone_number' => '+31612345678',
+        'preferred_locale' => 'nl',
+        'timezone' => 'Europe/Amsterdam',
         'role' => 'employer_contact',
         'tenant_id' => (string) Str::uuid(),
         'tenant_name' => 'Acme Arbodienst',
@@ -62,7 +67,12 @@ test('sso callback verifies the token, syncs the employer scope, and logs the us
     $user = User::query()->where('email', 'emma@client-company.test')->first();
     expect($user)->not->toBeNull()
         ->and($user->employer_id)->not->toBeNull()
-        ->and($user->current_role)->toBe('employer_contact');
+        ->and($user->current_role)->toBe('employer_contact')
+        ->and($user->first_name)->toBe('Emma')
+        ->and($user->last_name)->toBe('Employer')
+        ->and($user->phone_number)->toBe('+31612345678')
+        ->and($user->preferred_locale)->toBe('nl')
+        ->and($user->timezone)->toBe('Europe/Amsterdam');
     expect(Tenant::query()->where('name', 'Acme Arbodienst')->exists())->toBeTrue();
 });
 
