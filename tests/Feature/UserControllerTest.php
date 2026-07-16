@@ -40,7 +40,7 @@ test('store creates the new user scoped to the acting employer', function () {
     $user = User::factory()->create(['employer_id' => $employerId]);
     $this->actingAs($user);
 
-    Http::fake(['*/api/users' => Http::response(['id' => (string) Str::uuid(), 'temporary_password' => 'temp-pass'])]);
+    Http::fake(['*/api/users' => Http::response(['id' => (string) Str::uuid()])]);
 
     $response = $this->post('/users', ['name' => 'New Person', 'email' => 'new@acme.test']);
 

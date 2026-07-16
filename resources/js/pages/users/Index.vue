@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { Form, Head, useForm, usePage } from '@inertiajs/vue3';
-import { Check, Copy, Plus, Trash2 } from '@lucide/vue';
+import { Form, Head, useForm } from '@inertiajs/vue3';
+import { Plus, Trash2 } from '@lucide/vue';
 import { ref } from 'vue';
 import Heading from '@/components/Heading.vue';
 import InputError from '@/components/InputError.vue';
@@ -32,12 +32,9 @@ defineProps<{
     users: IdentityUser[];
 }>();
 
-const page = usePage<{ flash?: { temporaryPassword?: string } }>();
-
 const showCreate = ref(false);
 const editingUser = ref<IdentityUser | null>(null);
 const deletingUser = ref<IdentityUser | null>(null);
-const copied = ref(false);
 
 function confirmDelete() {
     if (!deletingUser.value) {
@@ -50,14 +47,6 @@ function confirmDelete() {
             deletingUser.value = null;
         },
     });
-}
-
-async function copyPassword(password: string) {
-    await navigator.clipboard.writeText(password);
-    copied.value = true;
-    setTimeout(() => {
-        copied.value = false;
-    }, 2000);
 }
 </script>
 
@@ -74,32 +63,6 @@ async function copyPassword(password: string) {
                 <Plus class="mr-1 size-4" />
                 Add user
             </Button>
-        </div>
-
-        <!-- Temporary password notice -->
-        <div
-            v-if="page.props.flash?.temporaryPassword"
-            class="rounded-lg border border-yellow-300 bg-yellow-50 p-4 text-sm dark:border-yellow-700 dark:bg-yellow-950"
-        >
-            <p class="font-medium">
-                User created. Share this temporary password with them — it is
-                only shown once:
-            </p>
-            <div class="mt-2 flex items-center gap-2">
-                <code
-                    class="flex-1 rounded bg-background/60 px-2 py-1 font-mono text-base select-all"
-                    >{{ page.props.flash.temporaryPassword }}</code
-                >
-                <Button
-                    variant="outline"
-                    size="sm"
-                    @click="copyPassword(page.props.flash.temporaryPassword)"
-                >
-                    <Check v-if="copied" class="size-3.5" />
-                    <Copy v-else class="size-3.5" />
-                    {{ copied ? 'Copied' : 'Copy' }}
-                </Button>
-            </div>
         </div>
 
         <div class="overflow-x-auto rounded-lg border">

@@ -40,14 +40,14 @@ class UserController extends Controller
             'email' => ['required', 'email'],
         ]);
 
-        $created = $identity->createUser($user->tenant_id, $data['name'], $data['email'], 'employer', $user->employer_id);
+        $identity->createUser($user->tenant_id, $data['name'], $data['email'], 'employer', $user->employer_id);
 
         Inertia::flash('toast', [
             'type' => 'success',
-            'message' => "User {$data['name']} created.",
+            'message' => "User {$data['name']} created. They've been emailed a link to set up their passkey.",
         ]);
 
-        return to_route('users.index')->with('temporaryPassword', $created['temporary_password'] ?? null);
+        return to_route('users.index');
     }
 
     public function update(Request $request, string $uuid, IdentityClient $identity): RedirectResponse
